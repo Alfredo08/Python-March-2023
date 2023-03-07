@@ -6,7 +6,7 @@
 for i in range( 11, 2, -1 ):
     print( i )
 
-numbers = [10, 20, 30, 40, 50]
+numbers = [ 10, 20, 30, 40, 50 ]
 
 for i in range( 0, len( numbers ) ):
     print( i, numbers[ i ] )

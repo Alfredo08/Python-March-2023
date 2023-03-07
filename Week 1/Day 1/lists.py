@@ -2,7 +2,7 @@
 names = [ "Alex", "Roger", "Martha" ]
 
 print( names )
-print( names[0] )
+print( names[ 0 ] )
 
 # length_of_names_list = len( names )
 
