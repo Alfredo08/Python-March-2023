@@ -13,6 +13,7 @@ class Fraction:
     def add( self, fraction_to_add ):
         result_numerator = self.numerator * fraction_to_add.denominator + self.denominator * fraction_to_add.numerator
         result_denominator = self.denominator * fraction_to_add.denominator
+        # Creating the resulting fraction to be manipulated as a Fraction object
         result_fraction = Fraction( result_numerator, result_denominator )
         return result_fraction
 
