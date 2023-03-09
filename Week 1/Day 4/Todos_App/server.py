@@ -1,6 +1,23 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask( __name__ )
+
+list_of_todos = [{
+    "todo" : "Learning Flask",
+    "status" : "in_progress"
+},
+{
+    "todo" : "Learning Routes",
+    "status" : "cancelled"
+},
+{
+    "todo" : "Learning Templates",
+    "status" : "complete"
+},
+{
+    "todo" : "Learning Sessions",
+    "status" : "pending"
+}]
 
 @app.route( "/" )
 def hello_class():
@@ -15,6 +32,12 @@ def hello_there():
 def greeting( firstName, lastName ):
     print( f"Hey there from the server {firstName} {lastName}" )
     return ( f"Welcome to our server {firstName} {lastName}" )
+
+@app.route( "/home" )
+def home():
+    fName = "Alex"
+    lName = "Miller"
+    return render_template( "index.html", fullName=f"{fName} {lName}", list_of_todos=list_of_todos )
 
 # At the very end don't forget to place the "run" command
 if __name__ == "__main__":
