@@ -10,7 +10,7 @@
     <body>
         <div class="container">
             <h1>
-                Adding a new todo
+                Hey {{ session[ 'full_name' ] }} you are now in the 'Adding a new todo section'
             </h1>
             <form action="/todo/new" method="POST" >
                 <div>
@@ -31,6 +31,7 @@
                     </label>
                     <input id="todo_id" name="todo_id" >
                 </div>
+                <input type="hidden" id="user_id" name="user_id" value="12345" >
                 <button type="submit" class="btn btn-success">
                     Add todo
                 </button>

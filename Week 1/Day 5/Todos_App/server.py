@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 
 app = Flask( __name__ )
+app.secret_key = "password1234"
 
 list_of_todos = [{
     "todo" : "Learning Flask",
@@ -25,11 +26,18 @@ list_of_todos = [{
 
 @app.route( '/todos', methods=['GET'] )
 def get_todos():
+    session[ 'full_name' ] = "Alex Miller"
     return render_template( "home.html", list_of_todos=list_of_todos )
 
 @app.route( '/todo/form', methods=['GET'] )
 def display_todo_form():
-    return render_template( "todo_form.html" )
+    if 'full_name' in session:
+        current_user = session[ 'full_name' ]
+        print( current_user )
+        # session[ 'full_name' ] = "Alexander Miller"
+        return render_template( "todo_form.html" )
+    else:
+        return redirect( "/todos" )
 
 @app.route( '/todo/new', methods=['POST'] )
 def create_todo():
