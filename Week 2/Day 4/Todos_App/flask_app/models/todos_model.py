@@ -1,5 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import DATABASE
+from flask_app.models import users_model
 
 class Todo:
     def __init__( self, data ):
@@ -9,6 +10,7 @@ class Todo:
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
         self.user_id = data["user_id"]
+        self.user_list = []
     
     @classmethod
     def get_all( cls ):

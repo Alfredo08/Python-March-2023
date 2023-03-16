@@ -15,6 +15,7 @@
             <h2>
                 Your list of todos is the following one:
             </h2>
+            {% if current_user.todo_list | length > 0: %}
             <table>
                 <tr>
                     <th>
@@ -49,6 +50,16 @@
                 </tr>
                 {% endfor %}
             </table>
+            {% else: %}
+            <div>
+                You currently don't have any todo!
+            </div>
+            {% endif %}
+            <form action="/todos" method="GET">
+                <button class="btn btn-warning">
+                    Go back home
+                </button>
+            </form>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     </body>

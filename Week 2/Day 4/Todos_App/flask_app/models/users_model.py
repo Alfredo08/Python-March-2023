@@ -1,6 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import DATABASE
-from flask_app.models.todos_model import Todo
+from flask_app.models import todos_model
 
 class User:
     def __init__( self, data ):
@@ -31,7 +31,7 @@ class User:
                     "updated_at" : row[ "t.updated_at" ],
                     "user_id" : row[ "user_id" ]
                 }
-                current_todo_object = Todo( current_todo )
+                current_todo_object = todos_model.Todo( current_todo )
                 current_user.todo_list.append( current_todo_object )
         print( "Todos", current_user.todo_list )
         return current_user

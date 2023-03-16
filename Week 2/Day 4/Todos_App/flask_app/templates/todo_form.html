@@ -23,20 +23,31 @@
                     <label for="todo_status">
                         Status:
                     </label>
-                    <input id="todo_status" name="todo_status" >
-                </div>
-                <div>
-                    <label for="todo_id">
-                        Todo id:
-                    </label>
-                    <input id="todo_id" name="todo_id" >
+                    <select id="todo_status" name="todo_status">
+                        <option value="complete">
+                            Complete
+                        </option>
+                        <option value="in_progress">
+                            In Progress
+                        </option>
+                        <option value="paused">
+                            Paused
+                        </option>
+                        <option value="cancelled">
+                            Cancelled
+                        </option>
+                    </select>
                 </div>
                 <input type="hidden" id="user_id" name="user_id" value="12345" >
                 <button type="submit" class="btn btn-success">
                     Add todo
                 </button>
             </form>
-            
+            <form action="/todos" method="GET">
+                <button class="btn btn-warning">
+                    Go back home
+                </button>
+            </form>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     </body>
