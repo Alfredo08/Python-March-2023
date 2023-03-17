@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app import DATABASE
+from flask_app import DATABASE, EMAIL_REGEX
 from flask_app.models import todos_model
 from flask import flash
 
@@ -40,6 +40,19 @@ class User:
         return current_user
     
     @classmethod
+    def get_one( cls, data ):
+        query  = "SELECT * "
+        query += "FROM users "
+        query += "WHERE email = %(email)s; "
+
+        result = connectToMySQL( DATABASE ).query_db( query, data )
+        if len( result ) > 0:
+            return cls( result[0] )
+        else:
+            flash( "Wrong credentials!", "password_login_error" )
+            return None
+    
+    @classmethod
     def create_one( cls, data ):
         query  = "INSERT INTO users( email, password, first_name, last_name ) "
         query += "VALUES( %(email)s, %(password)s, %(first_name)s, %(last_name)s ); "
@@ -51,7 +64,28 @@ class User:
     def validate_registration( data ):
         is_valid = True
         if len( data['first_name'] ) == 0:
-            flash( "You must provide your name!", "first_name_error" )
+            flash( "You must provide your first name!", "first_name_error" )
             is_valid = False
-
+        if len( data['last_name']) == 0:
+            flash( "You must provide your last name!", "last_name_error" )
+            is_valid = False
+        if data['password'] != data['password_confirmation']:
+            flash( "Passwords must match!", "password_error" )
+            is_valid = False
+        if not EMAIL_REGEX.match( data['email'] ): 
+            flash("Invalid email address!", "email_error")
+            is_valid = False
         return is_valid
+
+    @staticmethod
+    def encrypt_password( pwd, bcrypt ):
+        return bcrypt.generate_password_hash( pwd )
+    
+    @staticmethod
+    def validate_password( pwd, encr_pwd, bcrypt ):
+        if not bcrypt.check_password_hash( encr_pwd, pwd ):
+            flash( "Wrong credentials!", "password_login_error" )
+            return False
+        else:
+            return True
+        
