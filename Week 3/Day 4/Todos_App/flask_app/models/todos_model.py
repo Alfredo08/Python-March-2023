@@ -1,0 +1,75 @@
+from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app import DATABASE
+from flask_app.models import users_model
+
+class Todo:
+    def __init__( self, data ):
+        self.id = data["id"]
+        self.name = data["name"]
+        self.status = data["status"]
+        self.created_at = data["created_at"]
+        self.updated_at = data["updated_at"]
+        self.user_id = data["user_id"]
+        self.user_list = []
+    
+    @classmethod
+    def get_all( cls ):
+        query  = "SELECT * " 
+        query += "FROM todos;"
+        # In a SELECT we always get a LIST of DICTIONARIES
+        results = connectToMySQL( DATABASE ).query_db( query )
+        
+        list_of_todos = []
+        for row in results:
+            list_of_todos.append( cls(row) )
+        return list_of_todos
+
+    @classmethod
+    def get_one( cls, data ):
+        query  = "SELECT * "
+        query += "FROM todos "
+        query += "WHERE id = %(todo_id)s;"
+
+        result = connectToMySQL( DATABASE ).query_db( query, data )
+        current_todo = cls( result[0] )
+        return current_todo
+    
+    @classmethod
+    def create_one( cls, data ):
+        query  = "INSERT INTO todos( name, status, user_id ) "
+        query += "VALUES( %(name)s, %(status)s , %(user_id)s );"
+
+        result = connectToMySQL( DATABASE ).query_db( query, data )
+        return result
+    
+    @classmethod
+    def delete_one( cls, data ):
+        query  = "DELETE FROM todos "
+        query += "WHERE id = %(todo_id)s;"
+
+        result = connectToMySQL( DATABASE ).query_db( query, data )
+        if result == None:
+            return "Success"
+        else:
+            return "Something went wrong, look at the terminal logs!"
+    
+    @classmethod
+    def update_one( cls, data ):
+        query  = "UPDATE todos "
+        query += "SET name = %(name)s, status = %(status)s, user_id = %(user_id)s "
+        query += "WHERE id = %(todo_id)s;"
+
+        result = connectToMySQL( DATABASE ).query_db( query, data )
+        if result == None:
+            return "Success"
+        else:
+            return "Something went wrong, look at the terminal logs!"
+
+    @classmethod
+    def api_get_all( cls ):
+        query  = "SELECT * " 
+        query += "FROM todos;"
+        # In a SELECT we always get a LIST of DICTIONARIES
+        results = connectToMySQL( DATABASE ).query_db( query )
+        return results
+        
