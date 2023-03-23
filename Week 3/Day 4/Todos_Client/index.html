@@ -16,7 +16,41 @@
         <button onclick="loadTodos(this)">
             Load todos
         </button>
+        
         <div class="results"></div>
+
+        <form onsubmit="addTodo(event)">
+            <div>
+                <label for="todo_name">
+                    Add todo:
+                </label>
+                <input id="todo_name" name="todo_name" value="" class="form-control">
+            </div>
+            <div>
+                <label for="todo_status">
+                    Status:
+                </label>
+                <select id="todo_status" name="todo_status" class="form-control">
+                    <option value="complete" >
+                        Complete
+                    </option>
+                    <option value="in_progress" >
+                        In Progress
+                    </option>
+                    <option value="paused" >
+                        Paused
+                    </option>
+                    <option value="cancelled" >
+                        Cancelled
+                    </option>
+                </select>
+                <div>
+                    <button type="submit" class="btn btn-success mt-3">
+                        Add todo
+                    </button>
+                </div>
+            </div>
+        </form>
         <script src="./js/index.js"></script>
     </body>
 </html>
