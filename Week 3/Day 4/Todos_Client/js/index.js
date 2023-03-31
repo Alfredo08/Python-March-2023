@@ -74,6 +74,14 @@ async function addTodo( event ){
 
     let response = await fetch( url, settings );
     let responseData = await response.json();
-    console.log( responseData );
+    console.log( response );
+    if( response.status == 404 ){
+        // Load errors in page
+        console.log( responseData );
+    }
+    else{
+        
+    }
+    
 
 }
